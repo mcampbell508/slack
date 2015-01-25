@@ -3,7 +3,7 @@
 use InvalidArgumentException;
 
 class Attachment {
-  
+
   /**
    * The fallback text to use for clients that don't support attachments
    *
@@ -33,6 +33,20 @@ class Attachment {
   protected $color = 'good';
 
   /**
+   * The title to use for the attachment
+   *
+   * @var string
+   */
+  protected $title = '';
+
+  /**
+   * The title_link to use for the attachment
+   *
+   * @var string
+   */
+  protected $titleLink = '';
+
+  /**
    * The fields of the attachment
    *
    * @var array
@@ -48,6 +62,10 @@ class Attachment {
   public function __construct(array $attributes)
   {
     if (isset($attributes['fallback'])) $this->setFallback($attributes['fallback']);
+
+    if (isset($attributes['title'])) $this->setTitle($attributes['title']);
+
+    if (isset($attributes['title_link'])) $this->setTitleLink($attributes['title_link']);
 
     if (isset($attributes['text'])) $this->setText($attributes['text']);
 
@@ -151,6 +169,52 @@ class Attachment {
   }
 
   /**
+   * Get the title to use for the attachment
+   *
+   * @return string
+   */
+  public function getTitle()
+  {
+    return $this->title;
+  }
+
+  /**
+   * Set the title to use for the attachment
+   *
+   * @param string $title
+   * @return void
+   */
+  public function setTitle($title)
+  {
+    $this->title = $title;
+
+    return $this;
+  }
+
+  /**
+   * Get the title to use for the attachment
+   *
+   * @return string
+   */
+  public function getTitleLink()
+  {
+    return $this->titleLink;
+  }
+
+  /**
+   * Set the title_link to use for the attachment
+   *
+   * @param string $titleLink
+   * @return void
+   */
+  public function setTitleLink($titleLink)
+  {
+    $this->titleLink = $titleLink;
+
+    return $this;
+  }
+
+  /**
    * Get the fields for the attachment
    *
    * @return array
@@ -223,10 +287,12 @@ class Attachment {
   public function toArray()
   {
     $data = [
-      'fallback' => $this->getFallback(),
-      'text' => $this->getText(),
-      'pretext' => $this->getPretext(),
-      'color' => $this->getColor()
+        'fallback' => $this->getFallback(),
+        'text' => $this->getText(),
+        'pretext' => $this->getPretext(),
+        'color' => $this->getColor(),
+        'title' => $this->getTitle(),
+        'title_link' => $this->getTitleLink()
     ];
 
     $data['fields'] = $this->getFieldsAsArrays();
